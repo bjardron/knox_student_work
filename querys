@@ -1,0 +1,27 @@
+-- Select one student
+SELECT student_data.first_name, student_data.last_name, course_data.course_name, course_data.course_code, course_data.schedule
+FROM student_course
+JOIN student_data ON student_course.student_id = student_data.student_id
+JOIN course_data ON student_course.course_id = course_data.course_id
+WHERE student_data.student_id IN (111, 222, 3333);  -- List the student IDs you want to look up
+
+-- Select all students
+SELECT student_data.first_name, student_data.last_name, course_data.course_name, course_data.course_code, course_data.schedule
+FROM student_course
+JOIN student_data ON student_course.student_id = student_data.student_id
+JOIN course_data ON student_course.course_id = course_data.course_id;
+
+-- Retrieve courses for a specific student
+SELECT course_data.course_name, course_data.course_code, course_data.schedule
+FROM student_course
+JOIN course_data ON student_course.course_id = course_data.course_id
+WHERE student_course.student_id = 123;
+
+-- Retrieve students and how many courses they are enrolled in
+SELECT student_data.first_name, student_data.last_name, COUNT(student_course.course_id) AS total_courses
+FROM student_data
+LEFT JOIN student_course ON student_data.student_id = student_course.student_id
+GROUP BY student_data.student_id;
+
+
+
