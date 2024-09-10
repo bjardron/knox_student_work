@@ -1,3 +1,46 @@
+-- Create the database
+CREATE DATABASE IF NOT EXISTS StudentManagementSystem;
+
+-- Use the database
+USE StudentManagementSystem;
+
+-- Create table for storing student information
+CREATE TABLE IF NOT EXISTS student_data (
+    student_id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    email VARCHAR(100)
+);
+
+-- Create table for storing teacher information
+CREATE TABLE IF NOT EXISTS teacher_data (
+    teacher_id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    email VARCHAR(100),
+    class_id INT,
+    FOREIGN KEY (class_id) REFERENCES course_data(course_id)
+);
+
+-- Create table for storing course information
+CREATE TABLE IF NOT EXISTS course_data (
+    course_id INT AUTO_INCREMENT PRIMARY KEY,
+    course_name VARCHAR(100),
+    course_code VARCHAR(10),
+    schedule VARCHAR(100)
+);
+
+-- Create table for many-to-many relationship between students and courses
+CREATE TABLE IF NOT EXISTS student_course (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    student_id INT,
+    course_id INT,
+    FOREIGN KEY (student_id) REFERENCES student_data(student_id),
+    FOREIGN KEY (course_id) REFERENCES course_data(course_id)
+);
+
+
+
 -- Select one student
 SELECT student_data.first_name, student_data.last_name, course_data.course_name, course_data.course_code, course_data.schedule
 FROM student_course
